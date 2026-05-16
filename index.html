@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsTeledeutsch</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-whatsapp: #22c55e;
+            --accent-telegram: #0ea5e9;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, #1e293b, var(--bg-color));
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent-whatsapp), var(--accent-telegram));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+        }
+
+        /* Glassmorphism Form */
+        .form-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section h2 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-telegram);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Grid de Grupos */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .group-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .group-card:hover {
+            transform: scale(1.03);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .group-card.WhatsApp::before { background: var(--accent-whatsapp); }
+        .group-card.Telegram::before { background: var(--accent-telegram); }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .WhatsApp .badge { background: rgba(34, 197, 94, 0.2); color: var(--accent-whatsapp); }
+        .Telegram .badge { background: rgba(14, 165, 233, 0.2); color: var(--accent-telegram); }
+
+        .group-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .btn-join {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn-join:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .input-group { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WhatsTeledeutsch</h1>
+            <p>Das größte Netzwerk zur Suche nach lebendigen Gemeinschaften</p>
+        </header>
+
+        <section class="form-section">
+            <h2>🚀 Veröffentlichen Sie Ihre Community</h2>
+
+            <div class="group-card WhatsApp">
+                <span class="badge">Gruppe hinzufügen</span>
+
+                <a href="https://sexfreund.short.gy/Sexcam" class="btn-join">Gruppe hinzufügen</a>
+            </div>
+
+        </section>
+
+        <div class="groups-grid" id="grid">
+            <!-- Ejemplo de como se ven las cards -->
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Nudes nudes free 🔥18+</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/LPbHTT42YCdHEPQ1kjhFC9?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>DEUSTCH GEEIL🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/KCtkasR7P7q6FcpMRM7Qyl?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>SNAPCHATS🇩🇪🇦🇹🇨🇭🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/IN6A4pWCknE6ZV3LGyH1yM?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Gruppen skype geeil</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/CzFuH42DlSIGfEWukWruS4?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>GRUPPENGEIL🇩🇪🇦🇹🇨🇭</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/IYfbmzxt2v8Esd9n7Znjoa?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Nur German🇩🇪🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/FTFsgVMRpbBEBGxFHw92OG?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>German gruppe 2025🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/CVaXZm8Rh1XFgtMW8RqL9i?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Singles 🇩🇪🇦🇹🇨🇭🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/Fvdc5ERN62xFiVnFetspeh?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Deutschland🇩🇪🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/Cdwr7GBqUhg3lWrxq1rTuH?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>GRUPPE PREMIUM VIP 🇩🇪🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/GClpgEH7Nm0Dw9R0iFt1yz?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>HOT MANIA🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/+Sub6WgnEpG04ZDYx" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>NUDES GRUPPE 2026🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/+xuYYA6jDidZlMTFh" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>Gruppe§e%🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/+8uCVLthJYwo4YjRh" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>DropBox Verkauf🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/+c7fhwFdIPVoyNTEx" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>GRUPPE PREMIUM 🇩🇪🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/+YzTMYLR8cH1jZjVh" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card Telegram">
+                <span class="badge">Telegram</span>
+                <h3>🔥Geile reife Frauen🔥 +45</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://t.me/nurreif40" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Nudes , bilder videos kostenlos🔥🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/FCjLUyJDI5M8X8lWpXGC2m?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>BOT INSTAGRAM 1000 Follower 🔥🇩🇪</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/EMbf4x54SI9FZkcVlkikzl?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>TreffenSEX🔥🇩🇪🇩🇪</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/COlmQQ9XswrD0L8tMlxjfA?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>GruppenCHAT/TLG🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/IviBCTtGngaLyKH24nyo3e?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>CHAT,TREFFEN/TLG🇩🇪🇦🇹🇨🇭🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/LcLQHKgCmO87WliDQtvUGA?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>TELEGRAM GRUPPEN 🇩🇪🇦🇹🇨🇭🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/DBnbmk4x0Up0FKMCImL0B0?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>WhatsApp/Telegram🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/G3yKSWI8g2T12jtNUFsKor?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>NUR TELEGRAM🇩🇪💦</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/LTpoxcTKwt4KmwNUxC15je?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Telegram chat geil 🇩🇪🔥💦</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/GqT5W2rbKFmJp1Hrr7pSiQ?mode=hqctcla" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Kostenlose Bot geeil per Telegramm 🔥💦</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/Do7aiSevqywDPB9hjKQhOr?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Chat nudes kostenlos 🔥💦</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/ErlaaWrjv3TJvWkG6ZWtNS?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>GEILENUDES🔥💦</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/K7Tt1v7VYFt4xQCdYWnlEY?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>ONLYFANSKOSTENLOS🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/GRdu6euZ8zc7l49hcXA9Ga?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>SEX DATING & und fünf 18+🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/DUrFHSqp1Uf99Wwr3dMy8v?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>NUDES NUDES FREEE🔥🔥🇩🇪</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/HG141FVRjvZ0YFA2D5SprC?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>GROSSE TITTEN 🔥🇩🇪</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/IpgfSeoF4AXFSFmO0CrpPx?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>ONLYFANSKOSTENLOS🔥🇩🇪</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/FGlTM8BJghL9fE9foH69Lb?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>NUDEES🥵💦🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/LdHWit5qb1M5k9U9L6cFM2?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>BILDERUNDVIDEOSFREE🔥🥵</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/ItWk28LTI1GCD0YlXl3aMu?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Notgeilen Gruppe🥵</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/Fxfg31rcE4b61n6z1LmBpu?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>Signal Gruppe 🇩🇪🥵🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/EywbdQL2oZMLYEnggstkUn?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+
+
+            <div class="group-card WhatsApp">
+                <span class="badge">WhatsApp</span>
+                <h3>ONLYGIRLS🇩🇪🇦🇹🇨🇭🔥</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                <a href="https://chat.whatsapp.com/GQtXdEwViZEE0I5mczqxhk?mode=gi_t" class="btn-join">Jetzt beitreten</a>
+
+            </div>
+
+            </div>
+        </div>
+
+
+    <script>
+        // Lógica de interacción y base de datos local
+        const form = document.getElementById('groupForm');
+        const grid = document.getElementById('grid');
+
+        // Cargar datos
+        let groups = JSON.parse(localStorage.getItem('social_groups')) || [];
+
+        function render() {
+            // Limpiamos pero dejamos los ejemplos estáticos si no hay nada
+            if(groups.length > 0) {
+                grid.innerHTML = '';
+                groups.forEach(g => {
+                    const div = document.createElement('div');
+                    div.className = `group-card ${g.type}`;
+                    div.innerHTML = `
+                        <span class="badge">${g.type}</span>
+                        <h3>${g.name}</h3>
+                        <p style="color: #94a3b8; font-size: 0.85rem;">Neue Community kürzlich hinzugefügt.</p>
+                        <a href="${g.link}" target="_blank" class="btn-join">Tritt der Gruppe bei</a>
+                    `;
+                    grid.prepend(div);
+                });
+            }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newGroup = {
+                name: document.getElementById('name').value,
+                type: document.getElementById('type').value,
+                link: document.getElementById('link').value
+            };
+
+            groups.push(newGroup);
+            localStorage.setItem('social_groups', JSON.stringify(groups));
+
+            // Animación visual simple al agregar
+            render();
+            form.reset();
+        });
+
+        render();
+    </script>
+</body>
+</html>
